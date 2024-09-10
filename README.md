@@ -206,7 +206,14 @@ when u hit http://127.0.0.1:8000/admin/register .it will save admin@examle.com a
             }
 
         ```  
+ <p>
+Auth কী?
+Laravel-এর Auth ফ্যাসেডটি authentication (লগইন/লগআউট) ম্যানেজ করার জন্য ব্যবহৃত হয়। এর মাধ্যমে আপনি ইউজারের লগইন অবস্থা যাচাই, লগইন করানো, লগআউট করানো ইত্যাদি করতে পারেন।
 
+logout() কী করে?
+logout() মেথডটি গার্ডের অধীনে থাকা ইউজারকে লগআউট করানোর জন্য ব্যবহার হয়। এটি সেশনে থাকা ইউজারের authentication তথ্যগুলো মুছে ফেলে এবং ইউজারকে লগআউট করে।
+
+ </p>
 
 ### logout route define
  ```Route::get('admin/logout',[AdminController::class,'logout'])->name('admin.logout');```
@@ -226,25 +233,31 @@ php artisan make:middleware AdminRedirect
     public function handle(Request $request, Closure $next): Response
         {
 
-            if(Auth::guard('auth')->check()){
+            if(Auth::guard('admin')->check()){
                 return redirect()->route('admin.dashboard');
             }
             return $next($request);
         }
 ```
-
+<p>
+  AdminRedirect middleware নিশ্চিত করে যে, লগইন করা ব্যবহারকারীকে পুনরায় লগইন পেজে না পাঠিয়ে সরাসরি ড্যাশবোর্ডে পাঠানো হয়।
+</p>
 
 ## AdminAuthenticate
 
 ``` 
     public function handle(Request $request, Closure $next): Response
         {
-            if(!Auth::guard('auth')->check()){
+            if(!Auth::guard('admin')->check()){
                 return redirect()->route('admin.login');
             }
             return $next($request);
         }
 ```
+<p>
+AdminAuthenticate middleware নিশ্চিত করে যে, কোনো ব্যবহারকারী লগইন না করা থাকলে তাকে প্রোটেক্টেড পেজে ঢুকতে দেওয়া হবে না, এবং লগইন পেজে পাঠানো হবে।
+</p>
+
 
 ## this 2 middleware register in boostrap/app.php file
 ``` 
@@ -256,6 +269,18 @@ php artisan make:middleware AdminRedirect
 
       })
 ```
+
+<p>
+
+## এই কোডটি কী করছে?
+এখানে আপনার middleware-গুলো রেজিস্টার করা হচ্ছে এবং তাদের জন্য একটি শর্টকাট নাম (অ্যালিয়াস) সেট করা হচ্ছে:
+
+'admin.guest' হিসেবে AdminRedirect middleware কাজ করবে।
+'admin.auth' হিসেবে AdminAuthenticate middleware কাজ করবে।
+
+## কেন প্রয়োজন?
+এটি আপনাকে রুট ফাইলে ছোট এবং পরিচ্ছন্ন কোড লেখার সুবিধা দেয়। আপনি সরাসরি 'middleware' => 'admin.auth' এর মতো লিখে middleware অ্যাসাইন করতে পারবেন, যা কোড পড়া ও বুঝতে সহজ করে তোলে।
+</p>
 
 
 ## next i need to use this in route
