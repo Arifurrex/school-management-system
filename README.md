@@ -158,6 +158,7 @@ public function authenticate(Request $request){
 <p>
   Laravel যখন Auth::guard('admin') কল করে, তখন এটি মূলত config/auth.php ফাইলের মধ্যে থেকে 'admin' গার্ডের কনফিগারেশন বের করে।
 </p>
+
 ### while i have no user now . i create user static way
 
   ``` 
