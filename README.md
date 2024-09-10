@@ -63,43 +63,49 @@
 
  ### login.blade.php
 
-         ``` <form action="{{route('admin.authenticate')}}" method="post">
-          @csrf```
+``` 
+<form action="{{route('admin.authenticate')}}" method="post">
+@csrf
 
+```
 
 ## validation system
    
-   ### controller
-  ``` public function authenticate(Request $request){
-        $req->validate([
-            'email' =>'required',
-            'password' => 'required'
-        ]);
-   }```
+### controller
+
+``` 
+public function authenticate(Request $request){
+    $req->validate([
+        'email' =>'required',
+        'password' => 'required'
+    ]);
+}
+```
    
-   ### login.blade.php where you want to show error massage 
+
+### login.blade.php where you want to show error massage 
        
        for email 
 
-       ```
-                <div class="text-danger">
-                    @error('email')
-                        <p class="text-danger">{{$message}}</p>
-                    @enderror
-                </div>
-          
-        ``` 
+```
+        <div class="text-danger">
+            @error('email')
+                <p class="text-danger">{{$message}}</p>
+            @enderror
+        </div>
+    
+``` 
 
        for password
 
-      ``` 
-                    <div class="text-danger">
-                        @error('password')
-                        <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
+``` 
+            <div class="text-danger">
+                @error('password')
+                <p class="text-danger">{{$message}}</p>
+                @enderror
+            </div>
 
-       ```
+```
 
 
        validate done !!
@@ -107,30 +113,30 @@
 
 ## authention again logic
 
-            ```
-                    public function authenticate(Request $req)
-                {
+```
+        public function authenticate(Request $req)
+    {
 
-                    
-                    
-                    if (Auth::guard('admin')->attempt(['email' => $req->email,'password' => $req->password])) 
-                    {
+        
+        
+        if (Auth::guard('admin')->attempt(['email' => $req->email,'password' => $req->password])) 
+        {
 
-                    if(Auth::guard('admin')->user()->role != 'admin')
-                    {
-                            Auth::guard('admin')->logout();
-                            return redirect()->route('admin.login')->with('error','Unauthorise user ');
-                    }else{
-                            return redirect()->route('admin.dashboard');
-                    }
-                    } else {
+        if(Auth::guard('admin')->user()->role != 'admin')
+        {
+                Auth::guard('admin')->logout();
+                return redirect()->route('admin.login')->with('error','Unauthorise user ');
+        }else{
+                return redirect()->route('admin.dashboard');
+        }
+        } else {
 
-                        return redirect()->route('admin.login')->with('error', 'something went wrong');
+            return redirect()->route('admin.login')->with('error', 'something went wrong');
 
-                    };
-                }
+        };
+    }
 
-            ```
+```
 
 
 ### while i have no user now . i create user static way
@@ -191,8 +197,10 @@ when u hi http://127.0.0.1:8000/admin/register .it will save admin@examle.com ad
 
 create 2 middleware 
 
-```php artisan make:middleware AdminAuthenticate
-php artisan make:middleware AdminRedirect```
+```
+php artisan make:middleware AdminAuthenticate
+php artisan make:middleware AdminRedirect
+```
 
 ## AdminRedirect
 ```
