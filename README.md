@@ -4,36 +4,40 @@
 ## Laravel multi Authentication system
  
  # setup database 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=school-management-system
-DB_USERNAME=root
-DB_PASSWORD=
-DB_COLLATION=utf8mb4_general_ci
+```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=school-management-system
+    DB_USERNAME=root
+    DB_PASSWORD=
+    DB_COLLATION=utf8mb4_general_ci
+```
 
   ### customize user table
-   public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->enum('role',['admin','student','teacher','parent'])->default('student');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+```   
+    public function up(): void
+        {
+            Schema::create('users', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('email')->unique();
+                $table->enum('role',['admin','student','teacher','parent'])->default('student');
+                $table->timestamp('email_verified_at')->nullable();
+                $table->string('password');
+                $table->rememberToken();
+                $table->timestamps();
+            });
 
 
-    }
-
+        }
+```
 ### make guard for admin via middileware
 
  go to config/auth.php file
 
- 'guards' => [
+``` 
+'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -55,21 +59,23 @@ DB_COLLATION=utf8mb4_general_ci
         ],
  ]
 
+ ```
+
  ### login.blade.php
 
-          <form action="{{route('admin.authenticate')}}" method="post">
-          @csrf
+         ``` <form action="{{route('admin.authenticate')}}" method="post">
+          @csrf```
 
 
 ## validation system
    
    ### controller
-   public function authenticate(Request $request){
+  ``` public function authenticate(Request $request){
         $req->validate([
             'email' =>'required',
             'password' => 'required'
         ]);
-   }
+   }```
    
    ### login.blade.php where you want to show error massage 
        
@@ -129,7 +135,8 @@ DB_COLLATION=utf8mb4_general_ci
 
 ### while i have no user now . i create user static way
 
-   public function register()
+  ``` 
+  public function register()
     {
         $user = new User();
         $user->name = 'Admin';
@@ -140,9 +147,11 @@ DB_COLLATION=utf8mb4_general_ci
         return redirect()->route('admin.login')->with('success', 'User create successfully');
     }
 
+```
+
 ### register define in route
 
-   Route::get('admin/register',[AdminController::class,'register'])->name('admin.register');
+   ```Route::get('admin/register',[AdminController::class,'register'])->name('admin.register');```
 
 when u hi http://127.0.0.1:8000/admin/register .it will save admin@examle.com admin user in database . that way i save static user
 
@@ -175,15 +184,15 @@ when u hi http://127.0.0.1:8000/admin/register .it will save admin@examle.com ad
 
 
 ### logout route define
- Route::get('admin/logout',[AdminController::class,'logout'])->name('admin.logout');
+ ```Route::get('admin/logout',[AdminController::class,'logout'])->name('admin.logout');```
 
 
 ## middleware
 
 create 2 middleware 
 
-php artisan make:middleware AdminAuthenticate
-php artisan make:middleware AdminRedirect
+```php artisan make:middleware AdminAuthenticate
+php artisan make:middleware AdminRedirect```
 
 ## AdminRedirect
 ```
