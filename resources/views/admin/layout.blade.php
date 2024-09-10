@@ -365,8 +365,6 @@
 
   <script src="dist/js/adminlte2167.js?v=3.2.0"></script>
 
-  <script src="dist/js/demo.js"></script>
-
   <script src="dist/js/pages/dashboard.js"></script>
 
   @yield('customJs')
