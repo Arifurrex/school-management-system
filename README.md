@@ -32,7 +32,7 @@
 
         }
 ```
-### make guard for admin via middileware
+### make guard for mutiple users
 
  go to config/auth.php file
 
@@ -129,7 +129,7 @@ public function authenticate(Request $request){
        validate done !!
 
 
-## authention again logic
+## authention logic again
 
 ```
         public function authenticate(Request $req)
@@ -153,10 +153,11 @@ public function authenticate(Request $request){
 
         };
     }
-
 ```
 
-
+<p>
+  Laravel যখন Auth::guard('admin') কল করে, তখন এটি মূলত config/auth.php ফাইলের মধ্যে থেকে 'admin' গার্ডের কনফিগারেশন বের করে।
+</p>
 ### while i have no user now . i create user static way
 
   ``` 
