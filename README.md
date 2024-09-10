@@ -159,7 +159,7 @@ public function authenticate(Request $request){
 
    ```Route::get('admin/register',[AdminController::class,'register'])->name('admin.register');```
 
-when u hi http://127.0.0.1:8000/admin/register .it will save admin@examle.com admin user in database . that way i save static user
+when u hit http://127.0.0.1:8000/admin/register .it will save admin@examle.com admin user in database . that way i save static user
 
 
 ### session
