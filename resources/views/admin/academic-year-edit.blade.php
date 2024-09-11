@@ -7,12 +7,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Academic year</h1>
+        <h1>Academic year edit</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-          <li class="breadcrumb-item active">academic year</li>
+          <li class="breadcrumb-item active">academic year edit</li>
         </ol>
       </div>
     </div>
@@ -27,11 +27,11 @@
 
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Add academic year</h3>
+            <h3 class="card-title">Edit academic year</h3>
           </div>
 
 
-          <form action="{{route('academic-year.store')}}" method="post"> 
+          <form action="{{route('academic-year.update',$academic_year->id)}}" method="post"> 
             @csrf
             <div class="card-body">
               <div class="form-group">
@@ -41,7 +41,7 @@
                   {{Session::get('success')}}
                  </p>
                 @endif
-                <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter academic year">
+                <input type="text" name="name" class="form-control" value="{{ old('name', $academic_year->name) }}" id="exampleInputEmail1" placeholder="Enter academic year">
                 @error('name')
                 <div>
                     <p class="text-danger">{{$message }}</p>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">update</button>
             </div>
           </form>
         </div>

@@ -12,7 +12,9 @@ class AcademicYearController extends Controller
      */
     public function index()
     {
-        return view('admin.academic_year');
+        $data = new AcademicYear();
+        $all_data['academic_year']=$data->latest()->get();
+        return view('admin.academic_year_list',$all_data);
     }
 
     /**
@@ -20,7 +22,7 @@ class AcademicYearController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.academic_year');
     }
 
     /**
@@ -28,7 +30,14 @@ class AcademicYearController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required'
+        ]);
+
+        $data = new AcademicYear();
+        $data ->name = $request->name;
+        $data->save();
+        return redirect()->route('academic-year.create')->with('success','academic year save successfully');
     }
 
     /**
@@ -42,24 +51,30 @@ class AcademicYearController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AcademicYear $academicYear)
+    public function edit($id)
     {
-        //
+        $data['academic_year'] = AcademicYear::find($id);
+        return view('admin.academic-year-edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AcademicYear $academicYear)
+    public function update(Request $request,$id)
     {
-        //
+        $data = AcademicYear::find($id);
+        $data->name = $request->name;
+        $data->update();
+        return redirect()->route('academic-year.index')->with('success','successfully updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AcademicYear $academicYear)
+    public function delete($id)
     {
-        //
+        $data = AcademicYear::find($id);
+        $data->delete();
+        return redirect()->route('academic-year.index')->with('success','successfully delete ');
     }
 }
