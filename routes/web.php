@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\FeeHeadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,6 +31,22 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('academic-year/edit/{id}',[AcademicYearController::class,'edit'])->name('academic-year.edit');
         Route::post('academic-year/update/{id}',[AcademicYearController::class,'update'])->name('academic-year.update');
         Route::get('academic-year/delete/{id}',[AcademicYearController::class,'delete'])->name('academic-year.delete');
+
+         //class-route
+         Route::get('class/index',[ClassesController::class,'index'])->name('class.index');
+         Route::get('class/create',[ClassesController::class,'create'])->name('class.create');
+         Route::post('class/store',[ClassesController::class,'store'])->name('class.store');
+         Route::get('class/edit/{id}',[ClassesController::class,'edit'])->name('class.edit');
+         Route::post('class/update/{id}',[ClassesController::class,'update'])->name('class.update');
+         Route::get('class/delete/{id}',[ClassesController::class,'delete'])->name('class.delete');
+
+          //fee-Head-route
+        Route::get('FeeHead/index',[FeeHeadController::class,'index'])->name('FeeHead.index');
+        Route::get('FeeHead/create',[FeeHeadController::class,'create'])->name('FeeHead.create');
+        Route::post('FeeHead/store',[FeeHeadController::class,'store'])->name('FeeHead.store');
+        Route::get('FeeHead/edit/{id}',[FeeHeadController::class,'edit'])->name('FeeHead.edit');
+        Route::post('FeeHead/update/{id}',[FeeHeadController::class,'update'])->name('FeeHead.update');
+        Route::get('FeeHead/delete/{id}',[FeeHeadController::class,'delete'])->name('FeeHead.delete');
         
     });  
 });
