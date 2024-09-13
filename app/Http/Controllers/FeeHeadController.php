@@ -14,7 +14,7 @@ class FeeHeadController extends Controller
     {
         $data = new FeeHead();
         $all_data['FeeHead']=$data->latest()->get();
-        return view('admin.FeeHead_list',$all_data);
+        return view('admin.FeeHead.FeeHead-list',$all_data);
     }
 
     /**
@@ -22,7 +22,7 @@ class FeeHeadController extends Controller
      */
     public function create()
     {
-        return view('admin.FeeHead');
+        return view('admin.FeeHead.FeeHead');
     }
 
     /**
@@ -54,7 +54,7 @@ class FeeHeadController extends Controller
     public function edit(FeeHead $feeHead,$id)
     {
         $data['FeeHead'] = FeeHead::find($id);
-        return view('admin.FeeHead-edit',$data);
+        return view('admin.FeeHead.FeeHead-edit',$data);
     }
 
     /**
@@ -71,7 +71,7 @@ class FeeHeadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $data = FeeHead::find($id);
         $data->delete();

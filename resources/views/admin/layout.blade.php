@@ -174,7 +174,7 @@
 
       <a href="index3.html" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">alinessa it solution</span>
       </a>
 
       <div class="sidebar">
@@ -212,6 +212,7 @@
               </a>
 
             </li>
+            <!-- academic year -->
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -236,6 +237,8 @@
                
               </ul>
             </li>
+
+            <!-- classes -->
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -260,6 +263,33 @@
                
               </ul>
             </li>
+
+            <!--fee-head -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Fee head
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('FeeHead.index')}}"  class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>view record</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('FeeHead.create')}}"  class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Fee Head create</p>
+                  </a>
+                </li>
+               
+              </ul>
+            </li>
+
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>

@@ -13,6 +13,11 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>DataTables</h1>
+          @if (Session::has('success'))
+                 <p class="alert alert-success">
+                  {{Session::get('success')}}
+                 </p>
+            @endif
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -40,20 +45,20 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Academic year</th>
+                    <th>Fee Head</th>
                     <th>Create at</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                   @foreach ($academic_year as $data )
+                   @foreach ($FeeHead as $data )
                     <tr>
                     <td>{{$data->id}}</td>
                     <td>{{$data->name}}</td>
                     <td>{{$data->created_at}}</td>
-                    <td><a href="{{route('academic-year.edit',$data->id)}}"  class="btn btn-primary">Edit</a></td>
-                    <td><a href="{{route('academic-year.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                    <td><a href="{{route('FeeHead.edit',$data->id)}}"  class="btn btn-primary">Edit</a></td>
+                    <td><a href="{{route('FeeHead.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
                   </tr>
                     @endforeach
                 </tbody>
@@ -84,7 +89,8 @@
 
 @section('customJs')
 
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
