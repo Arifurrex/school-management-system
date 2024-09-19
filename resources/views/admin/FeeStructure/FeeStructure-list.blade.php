@@ -22,8 +22,44 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-            <li class="breadcrumb-item active">Fee Structure DataTables</li>
+            <li class="breadcrumb-item active"><a href="{{route('FeeStructure.index')}}">Fee Structure DataTables</a></li>
           </ol>
+        </div>
+      </div>
+  </section>
+
+  <section class="content mb-2">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="{{route('FeeStructure.index')}}" method="get">
+            @csrf
+            <div class="row d-flex justify-content-center align-items-center border">
+              <div class="form-group col-md-3">
+                <label for="exampleInputClass">Class</label>
+                <select name="academic_class_id" id="exampleInputClass" class="form-control">
+                  <option disabled selected>Select what class</option>
+                  @foreach ($classes as $class )
+                  <option value="{{$class->id}}"{{$class->id == request('academic_class_id') ? 'selected' : null}}>{{$class->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="exampleInputAcademicYear">Academic Year</label>
+                <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
+                  <option value="" disabled selected>Select Academic Year</option>
+                  @foreach ($AcademicYears as $AcademicYear )
+                  <option value="{{$AcademicYear->id}}" {{$AcademicYear->id == request('academic_year_id') ? 'selected' : ''}}>{{$AcademicYear->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              <div class="col-md-3 d-flex justify-content-center align-items-center">
+                <button type="submit" class="btn btn-primary">Filter Data</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -46,8 +82,8 @@
                   <tr>
                     <th>ID</th>
                     <th>Class</th>
-                    <th>Academic Year</th>
                     <th>Fee Head</th>
+                    <th>Academic Year</th>
                     <th>January</th>
                     <th>February</th>
                     <th>March</th>
@@ -60,6 +96,7 @@
                     <th>October</th>
                     <th>November</th>
                     <th>December</th>
+                    <th>create time</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>

@@ -13,9 +13,21 @@ class FeeStructureController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['feeStructure'] = FeeStructure::with(['FeeHead', 'AcademicYear', 'academicClass'])->latest()->get();  // here FeeHead,AcademicYear,academicClass comes from feeStructure model when i define those function
+        $feeStructure = FeeStructure::query()->with(['FeeHead', 'AcademicYear', 'academicClass'])->latest();  // here FeeHead,AcademicYear,academicClass comes from feeStructure model when i define those function
+        
+        if($request->filled('academic_class_id')){
+           $feeStructure->where('academic_class_id',$request->get('academic_class_id'));
+        }
+        if($request->filled('academic_year_id')){
+            $feeStructure->where('academic_year_id',$request->get('academic_year_id'));
+         }
+        $data['feeStructure']=$feeStructure->get();
+        
+        $data['classes'] = AcademicClass::all();
+        $data['FeeHeads'] = FeeHead::all();
+        $data['AcademicYears'] = AcademicYear::all();
 
         return view('admin.FeeStructure.FeeStructure-list', $data);
     }
