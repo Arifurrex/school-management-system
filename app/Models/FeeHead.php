@@ -9,6 +9,6 @@ class FeeHead extends Model
 {
     use HasFactory;
     protected $fillable =[
-         'name'=>'required',
+         'name',
     ];
 }

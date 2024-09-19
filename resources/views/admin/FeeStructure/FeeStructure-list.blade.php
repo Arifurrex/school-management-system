@@ -37,7 +37,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">DataTable with default features</h3>
+              <h3 class="card-title">DataTable with default features 20002</h3>
             </div>
 
             <div class="card-body">
@@ -45,30 +45,70 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Academic year</th>
-                    <th>Create at</th>
+                    <th>Class</th>
+                    <th>Academic Year</th>
+                    <th>Fee Head</th>
+                    <th>January</th>
+                    <th>February</th>
+                    <th>March</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>August</th>
+                    <th>September</th>
+                    <th>October</th>
+                    <th>November</th>
+                    <th>December</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                   @foreach ($academic_year as $data )
+                   @foreach ($feeStructure as $data )
                     <tr>
                     <td>{{$data->id}}</td>
-                    <td>{{$data->name}}</td>
+                    <td>{{ $data->academicClass->name}}</td>
+                    <td>{{$data->FeeHead->name}}</td>
+                    <td>{{$data->AcademicYear->name}}</td>
+                    <td>{{$data->january}}</td>
+                    <td>{{$data->february}}</td>
+                    <td>{{$data->march}}</td>
+                    <td>{{$data->april}}</td>
+                    <td>{{$data->may}}</td>
+                    <td>{{$data->june}}</td>
+                    <td>{{$data->july}}</td>
+                    <td>{{$data->august}}</td>
+                    <td>{{$data->september}}</td>
+                    <td>{{$data->october}}</td>
+                    <td>{{$data->november}}</td>
+                    <td>{{$data->december}}</td>
                     <td>{{$data->created_at}}</td>
-                    <td><a href="{{route('academic-year.edit',$data->id)}}"  class="btn btn-primary">Edit</a></td>
-                    <td><a href="{{route('academic-year.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                    <td><a href="{{route('FeeStructure.edit',$data->id)}}"  class="btn btn-primary">Edit</a></td>
+                    <td><a href="{{route('FeeStructure.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
                   </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                  <th>ID</th>
+                    <th>Class</th>
+                    <th>Academic Year</th>
+                    <th>Fee Head</th>
+                    <th>January</th>
+                    <th>February</th>
+                    <th>March</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>August</th>
+                    <th>September</th>
+                    <th>October</th>
+                    <th>November</th>
+                    <th>December</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </tfoot>
               </table>
@@ -89,7 +129,8 @@
 
 @section('customJs')
 
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>

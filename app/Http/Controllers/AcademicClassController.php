@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classes;
+use App\Models\academicClass;
 use Illuminate\Http\Request;
 
-class ClassesController extends Controller
+class AcademicClassController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = new Classes();
+        $data = new academicClass();
         $all_data['classes']=$data->latest()->get();
         return view('admin.class.class-list',$all_data);
     }
@@ -34,26 +34,20 @@ class ClassesController extends Controller
             'name'=>'required'
         ]);
 
-        $data = new Classes();
+        $data = new academicClass();
         $data ->name = $request->name;
         $data->save();
-        return redirect()->route('class.create')->with('success','academic year save successfully');
+        return redirect()->route('class.create')->with('success','academic class save successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Classes $classes)
-    {
-        //
-    }
+   
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $data['classes'] = Classes::find($id);
+        $data['classes'] = academicClass::find($id);
         return view('admin.class.class-edit',$data);
     }
 
@@ -62,7 +56,7 @@ class ClassesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data =Classes::find($id);
+        $data =academicClass::find($id);
         $data->name = $request->name;
         $data->update();
         return redirect()->route('class.index')->with('success','successfully updated');
@@ -73,7 +67,7 @@ class ClassesController extends Controller
      */
     public function delete($id)
     {
-        $data = Classes::find($id);
+        $data = academicClass::find($id);
         $data->delete();
         return redirect()->route('class.index')->with('success','successfully delete ');
     }
