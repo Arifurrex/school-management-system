@@ -45,22 +45,24 @@
                 <thead>
                   <tr>
                     <th>ID</th>
+                    <th>Class</th>
+                    <th>Academic Year</th>
                     <th>Fee Head</th>
-                    <th>Create at</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>January</th>
+                    <th>February</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
-                   @foreach ($FeeHead as $data )
+                
                     <tr>
-                    <td>{{$data->id}}</td>
-                    <td>{{$data->name}}</td>
-                    <td>{{$data->created_at}}</td>
-                    <td><a href="{{route('FeeHead.edit',$data->id)}}"  class="btn btn-primary">Edit</a></td>
-                    <td><a href="{{route('FeeHead.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                    <td>g</td>
+                    <td>f</td>
+                    <td>ff</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
                   </tr>
-                    @endforeach
+                  
                 </tbody>
                 <tfoot>
                   <tr>
