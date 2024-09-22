@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SCHOOL MANAGEMENT SYSTEM</title>
-  
+
   <base href="{{asset('admincss')}}/" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
@@ -225,18 +226,18 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('academic-year.index')}}"  class="nav-link">
+                  <a href="{{route('academic-year.index')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>view record</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('academic-year.create')}}"  class="nav-link">
+                  <a href="{{route('academic-year.create')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>academic year create</p>
                   </a>
                 </li>
-               
+
               </ul>
             </li>
 
@@ -251,18 +252,18 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('class.index')}}"  class="nav-link">
+                  <a href="{{route('class.index')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>view record</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('class.create')}}"  class="nav-link">
+                  <a href="{{route('class.create')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Classes create</p>
                   </a>
                 </li>
-               
+
               </ul>
             </li>
 
@@ -277,23 +278,23 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('FeeHead.index')}}"  class="nav-link">
+                  <a href="{{route('FeeHead.index')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>view record</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('FeeHead.create')}}"  class="nav-link">
+                  <a href="{{route('FeeHead.create')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Fee Head create</p>
                   </a>
                 </li>
-               
+
               </ul>
             </li>
 
-           <!-- feeStructure -->
-             <li class="nav-item">
+            <!-- feeStructure -->
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
@@ -303,18 +304,44 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('FeeStructure.index')}}"  class="nav-link">
+                  <a href="{{route('FeeStructure.index')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>view record</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('FeeStructure.create')}}"  class="nav-link">
+                  <a href="{{route('FeeStructure.create')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>FeeStructure create</p>
                   </a>
                 </li>
-               
+
+              </ul>
+            </li>
+
+            <!-- student management -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Student Management
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('student.index')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>view record</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('student.create')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>student create</p>
+                  </a>
+                </li>
+
               </ul>
             </li>
 
@@ -421,13 +448,13 @@
 
   <script src="plugins/sparklines/sparkline.js"></script>
 
-  <script src="plugins/jqvmap/jquery.vmap.min.js"></script> 
+  <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
   <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 
   <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
 
   <script src="plugins/moment/moment.min.js"></script>
-  
+
   <script src="plugins/daterangepicker/daterangepicker.js"></script>
 
   <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>

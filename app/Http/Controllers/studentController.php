@@ -13,12 +13,9 @@ class studentController extends Controller
 {
     public function index()
     {
-
-        $data['classes'] = academicClass::all();
-        $data['FeeHeads'] = FeeHead::all();
-        $data['AcademicYears'] = AcademicYear::all();
-
-        return view('admin.student.index', $data);
+        $query = User::with(['academicClass', 'academicYear'])->where('role', 'student')->latest('id')->get();
+        $data['student'] = $query;
+        return view('admin.student.student-list', $data);
     }
 
 
@@ -61,5 +58,36 @@ class studentController extends Controller
         $user->role = 'student';
         $user->save();
         return redirect()->route('student.create')->with('success', 'successfully added student');
+    }
+
+    public function edit($id)
+    {
+        $data['student'] = User::find($id);
+        $data['classes'] = academicClass::all();
+        $data['FeeHeads'] = FeeHead::all();
+        $data['AcademicYears'] = AcademicYear::all();
+        return view('admin.student.student-edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = User::find($id);
+        $data->name = $request->name;
+        $data->email  = $request->email;
+        $data->academic_class_id = $request->academic_class_id;
+        $data->academic_year_id  = $request->academic_year_id;
+        $data->admission_date = $request->admission_date;
+        $data->father_name = $request->father_name;
+        $data->mother_name = $request->mother_name;
+        $data->dob = $request->dob;
+        $data->mobile_no = $request->mobile_no;
+        $data->update();
+        return redirect()->route('student.index')->with('success', 'successfully update');
+    }
+
+    public function delete($id){
+       $data=User::find($id);
+       $data->delete();
+       return redirect()->route('student.index')->with('success','successfully delete');
     }
 }

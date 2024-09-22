@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\academicClass;
+use App\Models\AcademicYear;
 
 class User extends Authenticatable
 {
@@ -43,5 +45,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function academicClass(){
+        return $this->belongsTo(academicClass::class);
+    }
+
+    public function academicYear(){
+        return $this->belongsTo(AcademicYear::class);
     }
 }

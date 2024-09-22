@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">student management</li>
+                        <li class="breadcrumb-item active">Edit student information</li>
                     </ol>
                 </div>
             </div>
@@ -27,9 +27,11 @@
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add student</h3>
+                            <h3 class="card-title">Edit student</h3>
                         </div>
-                        <form action="{{route('student.store')}}" method="post">
+
+
+                        <form action="{{route('student.update',$student->id)}}" method="post">
                             @csrf
                             <div class="card-body">
                                 @if (Session::has('success'))
@@ -41,9 +43,9 @@
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputClass">Class</label>
                                         <select name="academic_class_id" id="exampleInputClass" class="form-control">
-                                            <option disabled selected>Select what class</option>
+                                            <option disabled>Select what class</option>
                                             @foreach ($classes as $class )
-                                            <option value="{{$class->id}}">{{$class->name}}</option>
+                                            <option value="{{$class->id}}"{{$class->id == $student->academic_class_id ? 'selected' : null}}>{{$class->name}}</option>
                                             @endforeach
                                         </select>
 
@@ -57,9 +59,9 @@
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputAcademicYear">Academic Year</label>
                                         <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
-                                            <option value="" disabled selected>Select Academic Year</option>
+                                            <option value="" disabled>Select Academic Year</option>
                                             @foreach ($AcademicYears as $AcademicYear )
-                                            <option value="{{$AcademicYear->id}}">{{$AcademicYear->name}}</option>
+                                            <option value="{{$AcademicYear->id}}"{{$AcademicYear->id == $student->academic_year_id ? 'selected' : null}}>{{$AcademicYear->name}}</option>
                                             @endforeach
                                         </select>
                                         @error('academic_year_id')
@@ -71,7 +73,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputAcademicYear">Admission Date</label>
-                                        <input type="date" name="admission_date" class="form-control">
+                                        <input type="date" name="admission_date" value="{{old('admission_date',$student->admission_date)}}" class="form-control">
                                         @error('admission_date')
                                         <div>
                                             <p class="text-danger">{{$message }}</p>
@@ -84,7 +86,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputJanuary">Student Name</label>
-                                        <input type="" name="name" class="form-control" id="exampleInputJanuary" placeholder="Enter student name">
+                                        <input type="" name="name" value="{{old('name',$student->name)}}" class="form-control" id="exampleInputJanuary" placeholder="Enter student name">
                                         @error('name')
                                         <div>
                                             <p class="text-danger">{{$message}}</p>
@@ -94,7 +96,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputJanuary">Student Father Name</label>
-                                        <input type="" name="father_name" class="form-control" id="exampleInputJanuary" placeholder="Enter student father name">
+                                        <input type="text" name="father_name" value="{{old('father_name',$student->father_name)}}" class="form-control" id="exampleInputJanuary" placeholder="Enter student father name">
                                         @error('father_name')
                                         <div>
                                             <p class="text-danger">{{$message}}</p>
@@ -105,7 +107,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputFebruary">student Mother Name</label>
-                                        <input type="text" name="mother_name" class="form-control" id="exampleInputFebruary" placeholder="Enter mother name">
+                                        <input type="text" name="mother_name" value="{{old('mother_name',$student->mother_name)}}" class="form-control" id="exampleInputFebruary" placeholder="Enter mother name">
                                         @error('mother_name')
                                         <div>
                                             <p class="text-danger">{{$message }}</p>
@@ -115,9 +117,9 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-md-4">
+                                <div class="form-group col-md-4">
                                         <label for="exampleInputAcademicYear">Date of birth</label>
-                                        <input type="date" name="dob" class="form-control">
+                                        <input type="date" name="dob" value="{{old('dob',$student->dob)}}" class="form-control">
                                         @error('dob')
                                         <div>
                                             <p class="text-danger">{{$message }}</p>
@@ -127,7 +129,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputEmail1">mobile number</label>
-                                        <input type="text" name="mobile_no" class="form-control" id="exampleInputApril" placeholder="Enter your mobile number">
+                                        <input type="text" name="mobile_no" value="{{old('mobile_no',$student->mobile_no)}}" class="form-control" id="exampleInputApril" placeholder="Enter your mobile number">
                                         @error('mobile_no')
                                         <div>
                                             <p class="text-danger">{{$message }}</p>
@@ -137,7 +139,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputEmail1">Email</label>
-                                        <input type="text" name="email" class="form-control" id="exampleInputMay" placeholder="Enter your email">
+                                        <input type="text" name="email" value="{{old('email',$student->email)}}" class="form-control" id="exampleInputMay" placeholder="Enter your email">
                                         @error('email')
                                         <div>
                                             <p class="text-danger">{{$message }}</p>
@@ -147,7 +149,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="exampleInputEmail1">Create password</label>
-                                        <input type="text" name="password" class="form-control" id="exampleInputJune" placeholder="Enter password">
+                                        <input type="password" name="password" value="{{old('password',$student->password)}}" class="form-control" id="exampleInputJune" placeholder="Enter password">
                                         @error('password')
                                         <div>
                                             <p class="text-danger">{{$message }}</p>

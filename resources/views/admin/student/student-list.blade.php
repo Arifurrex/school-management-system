@@ -1,5 +1,10 @@
 @extends('admin.layout')
 
+@section('customcss')
+<link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+@endsection
 @section('content')
 <div class="content-wrapper">
 
@@ -7,215 +12,133 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>student management</h1>
+                    <h1>Student DataTables</h1>
+                    @if (Session::has('success'))
+                    <p class="alert alert-success">
+                        {{Session::get('success')}}
+                    </p>
+                    @endif
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">student management</li>
+                        <li class="breadcrumb-item active"><a href="{{route('student.index')}}">Fee Student DataTables</a></li>
                     </ol>
                 </div>
             </div>
-        </div>
+            <!-- <div class="row mb-2">
+                <div class="form-group col-md-4">
+                    <label for="exampleInputClass">Class</label>
+                    <select name="academic_class_id" id="exampleInputClass" class="form-control">
+                        <option disabled selected>Select what class</option>
+                        @foreach ($student->academicClass as $class )
+                        <option value="{{$class->id}}">{{$class->name}}</option>
+                        @endforeach
+                    </select>
+
+                    @error('academic_class_id')
+                    <div>
+                        <p class="text-danger">{{$message }}</p>
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="exampleInputAcademicYear">Academic Year</label>
+                    <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
+                        <option value="" disabled selected>Select Academic Year</option>
+                        @foreach ($student->AcademicYears as $AcademicYear )
+                        <option value="{{$AcademicYear->id}}">{{$AcademicYear->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('academic_year_id')
+                    <div>
+                        <p class="text-danger">{{$message }}</p>
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="exampleInputAcademicYear">Admission Date</label>
+                    <input type="date" name="admission_date" class="form-control">
+                    @error('admission_date')
+                    <div>
+                        <p class="text-danger">{{$message }}</p>
+                    </div>
+                    @enderror
+
+                </div>
+
+            </div> -->
     </section>
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-
-                <div class="col-md-12">
-
-                    <div class="card card-primary">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Add student</h3>
+                            <h3 class="card-title">DataTable with default features</h3>
                         </div>
 
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Class</th>
+                                        <th>Academic Year</th>
+                                        <th>Admission Date</th>
+                                        <th>Student Name</th>
+                                        <th>Father Name</th>
+                                        <th>Mother Name</th>
+                                        <th>Date Of Birth</th>
+                                        <th>Mobile Number</th>
+                                        <th>Email</th>
+                                        <!-- <th>Password</th> -->
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($student as $data )
+                                    <tr>
+                                        <td>{{$data->id}}</td>
+                                        <td>{{$data->academicClass->name}}</td>
+                                        <td>{{$data->academicYear->name}}</td>
+                                        <td>{{$data->admission_date}}</td>
+                                        <td>{{$data->name}}</td>
+                                        <td>{{$data->father_name}}</td>
+                                        <td>{{$data->mother_name}}</td>
+                                        <td>{{$data->dob}}</td>
+                                        <td>{{$data->mobile_no}}</td>
+                                        <td>{{$data->email}}</td>
+                                        <!-- <td>{{$data->password}}</td> -->
+                                        <td><a href="{{route('student.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
+                                        <td><a href="{{route('student.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Class</th>
+                                        <th>Academic Year</th>
+                                        <th>Admission Date</th>
+                                        <th>Student Name</th>
+                                        <th>Father Name</th>
+                                        <th>Mother Name</th>
+                                        <th>Date Of Birth</th>
+                                        <th>Mobile Number</th>
+                                        <th>Email</th>
+                                        <!-- <th>Password</th> -->
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
-                        <form action="{{route('student.store')}}" method="post">
-                            @csrf
-                            <div class="card-body">
-                                @if (Session::has('success'))
-                                <p class="alert alert-success">
-                                    {{Session::get('success')}}
-                                </p>
-                                @endif
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputClass">Class</label>
-                                        <select name="academic_class_id" id="exampleInputClass" class="form-control">
-                                            <option disabled selected>Select what class</option>
-                                            @foreach ($classes as $class )
-                                            <option value="{{$class->id}}">{{$class->name}}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('academic_class_id')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputAcademicYear">Academic Year</label>
-                                        <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
-                                            <option value="" disabled selected>Select Academic Year</option>
-                                            @foreach ($AcademicYears as $AcademicYear )
-                                            <option value="{{$AcademicYear->id}}">{{$AcademicYear->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('academic_year_id')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputAcademicYear">Admission Date</label>
-                                        <input type="date" name="admission_date" class="form-control">
-                                        @error('admission_date')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputJanuary">January</label>
-                                        <input type="text" name="january" class="form-control" id="exampleInputJanuary" placeholder="Enter january fee">
-                                        @error('january')
-                                        <div>
-                                            <p class="text-danger">{{$message}}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputFebruary">February</label>
-                                        <input type="text" name="february" class="form-control" id="exampleInputFebruary" placeholder="Enter February Fee">
-                                        @error('february')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputMarch">March</label>
-                                        <input type="text" name="march" class="form-control" id="exampleInputMarch" placeholder="Enter March fee">
-                                        @error('march')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputEmail1">April</label>
-                                        <input type="text" name="april" class="form-control" id="exampleInputApril" placeholder="Enter April Fee">
-                                        @error('april')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputEmail1">May</label>
-                                        <input type="text" name="may" class="form-control" id="exampleInputMay" placeholder="Enter May Fee">
-                                        @error('may')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputEmail1">june</label>
-                                        <input type="text" name="june" class="form-control" id="exampleInputJune" placeholder="Enter June Fee">
-                                        @error('june')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputJuly">July</label>
-                                        <input type="text" name="july" class="form-control" id="exampleInputJuly" placeholder="Enter July Fee">
-                                        @error('july')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputAugust">August</label>
-                                        <input type="text" name="august" class="form-control" id="exampleInputAugust" placeholder="Enter August Fee">
-                                        @error('august')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputSeptember">September</label>
-                                        <input type="text" name="september" class="form-control" id="exampleInputSeptember" placeholder="Enter September Fee">
-                                        @error('september')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputOctober">October</label>
-                                        <input type="text" name="october" class="form-control" id="exampleInputOctober" placeholder="Enter FeeStructure">
-                                        @error('october')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputNovember">November</label>
-                                        <input type="text" name="november" class="form-control" id="exampleInputNovember" placeholder="Enter November Fee">
-                                        @error('november')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="exampleInputDecember">December</label>
-                                        <input type="text" name="december" class="form-control" id="exampleInputDecember" placeholder="Enter December Fee">
-                                        @error('december')
-                                        <div>
-                                            <p class="text-danger">{{$message }}</p>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
                     </div>
 
                 </div>
@@ -223,16 +146,57 @@
             </div>
 
         </div>
+
     </section>
 
 </div>
 @endsection
 
 @section('customJs')
-<script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script src="dist/js/adminlte.min2167.js?v=3.2.0"></script>
+
 <script>
     $(function() {
-        bsCustomFileInput.init();
+        $("#example1").DataTable({
+                "responsive": true, // টেবিলকে রেস্পন্সিভ করে তোলে যাতে এটি ছোট স্ক্রিনেও ঠিক মতো দেখা যায়।
+                "lengthChange": false, // ড্রপডাউন থেকে পেজের row সংখ্যা পরিবর্তন করার অপশন নিষ্ক্রিয় করে। 
+                "autoWidth": false, // স্বয়ংক্রিয়ভাবে টেবিলের কলামগুলোর প্রস্থ সেট না করতে বলে।
+                "buttons": [ // ডাটাটেবিলে কিছু button যোগ করে, যেমন:
+                    "copy", // টেবিলের ডেটা কপি করার button।
+                    "csv", // CSV ফরম্যাটে ডেটা এক্সপোর্ট করার button।
+                    "excel", // Excel ফাইলে ডেটা এক্সপোর্ট করার button।
+                    "pdf", // PDF ফরম্যাটে ডেটা এক্সপোর্ট করার button।
+                    "print", // টেবিলের ডেটা প্রিন্ট করার জন্য button।
+                    "colvis" // টেবিলের কলামগুলো হাইড/শো করার জন্য কলাম ভিজিবিলিটি অপশন।
+                ]
+            })
+            .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)'); // buttonগুলোকে টেবিলের নির্দিষ্ট স্থানে অ্যাপেন্ড করে (অর্থাৎ সেই বোতামগুলোকে পজিশনিং করে নির্দিষ্ট একটি ডিভে দেখানো হয়)।
+
+
+        $('#example2').DataTable({
+            "paging": true, // টেবিলে পেজিনেশন (অর্থাৎ পেজের সংখ্যা যোগ করা) সক্রিয় করে।
+            "lengthChange": false, // ড্রপডাউন থেকে পেজের row সংখ্যা পরিবর্তন করার অপশন নিষ্ক্রিয়।
+            "searching": false, // সার্চ ফিচার নিষ্ক্রিয় করে।
+            "ordering": true, // কলাম অনুযায়ী টেবিলের ডেটা সাজানোর (অর্ডার) সুবিধা দেয়।
+            "autoWidth": false, // কলামের প্রস্থ স্বয়ংক্রিয়ভাবে সেট না করা।
+            "responsive": true, // টেবিলকে রেস্পন্সিভ করে তোলে।
+        });
     });
 </script>
+
 @endsection

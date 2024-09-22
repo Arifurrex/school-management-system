@@ -62,9 +62,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('student/index', [studentController::class, 'index'])->name('student.index');
         Route::get('student/create', [studentController::class, 'create'])->name('student.create');
         Route::post('student/store', [studentController::class, 'store'])->name('student.store');
-        // Route::get('FeeStructure/edit/{id}', [FeeStructureController::class, 'edit'])->name('FeeStructure.edit');
-        // Route::post('FeeStructure/update/{id}', [FeeStructureController::class, 'update'])->name('FeeStructure.update');
-        // Route::get('FeeStructure/delete/{id}', [FeeStructureController::class, 'delete'])->name('FeeStructure.delete');    
+        Route::get('student/edit/{id}', [studentController::class, 'edit'])->name('student.edit');
+        Route::post('student/update/{id}', [studentController::class, 'update'])->name('student.update');
+        Route::get('student/delete/{id}', [studentController::class, 'delete'])->name('student.delete');    
 
     });
 });
