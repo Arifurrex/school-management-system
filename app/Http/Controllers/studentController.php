@@ -11,11 +11,22 @@ use Illuminate\Support\Facades\Hash;
 
 class studentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $query = User::with(['academicClass', 'academicYear'])->where('role', 'student')->latest('id')->get();
-        $data['student'] = $query;
-        return view('admin.student.student-list', $data);
+        $query = User::with(['academicClass', 'academicYear'])->where('role', 'student')->latest('id');
+        if ($request->filled('academic_class_id')) {
+            $query->where('academic_class_id', $request->get('academic_class_id'));
+        };
+        if ($request->filled('academic_year_id')) {
+            $query->where('academic_year_id', $request->get('academic_year_id'));
+        };
+        $students = $query->get();
+        $data['student'] =  $students;
+        $data['classes'] = academicClass::all();
+        $data['FeeHeads'] = FeeHead::all();
+        $data['AcademicYears'] = AcademicYear::all();
+        
+        return view ('admin.student.student-list', $data);
     }
 
 
@@ -85,9 +96,10 @@ class studentController extends Controller
         return redirect()->route('student.index')->with('success', 'successfully update');
     }
 
-    public function delete($id){
-       $data=User::find($id);
-       $data->delete();
-       return redirect()->route('student.index')->with('success','successfully delete');
+    public function delete($id)
+    {
+        $data = User::find($id);
+        $data->delete();
+        return redirect()->route('student.index')->with('success', 'successfully delete');
     }
 }

@@ -16,15 +16,15 @@ class FeeStructureController extends Controller
     public function index(Request $request)
     {
         $feeStructure = FeeStructure::query()->with(['FeeHead', 'AcademicYear', 'academicClass'])->latest();  // here FeeHead,AcademicYear,academicClass comes from feeStructure model when i define those function
-        
-        if($request->filled('academic_class_id')){
-           $feeStructure->where('academic_class_id',$request->get('academic_class_id'));
+
+        if ($request->filled('academic_class_id')) {
+            $feeStructure->where('academic_class_id', $request->get('academic_class_id'));
         }
-        if($request->filled('academic_year_id')){
-            $feeStructure->where('academic_year_id',$request->get('academic_year_id'));
-         }
-        $data['feeStructure']=$feeStructure->get();
-        
+        if ($request->filled('academic_year_id')) {
+            $feeStructure->where('academic_year_id', $request->get('academic_year_id'));
+        }
+        $data['feeStructure'] = $feeStructure->get();
+
         $data['classes'] = AcademicClass::all();
         $data['FeeHeads'] = FeeHead::all();
         $data['AcademicYears'] = AcademicYear::all();
@@ -69,24 +69,24 @@ class FeeStructureController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FeeStructure $feeStructure,$id)
+    public function edit(FeeStructure $feeStructure, $id)
     {
-        $data['feeStructure']=feeStructure::find($id);
+        $data['feeStructure'] = feeStructure::find($id);
         $data['classes'] = AcademicClass::all();
         $data['FeeHeads'] = FeeHead::all();
         $data['AcademicYears'] = AcademicYear::all();
-        return view('admin.FeeStructure.FeeStructure-edit',$data);
+        return view('admin.FeeStructure.FeeStructure-edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FeeStructure $feeStructure,$id)
+    public function update(Request $request, FeeStructure $feeStructure, $id)
     {
         $data = feeStructure::find($id);
         $data->academic_class_id = $request->academic_class_id;
         $data->academic_year_id = $request->academic_year_id;
-        $data->fee_head_id  = $request->fee_head_id ;
+        $data->fee_head_id  = $request->fee_head_id;
         $data->january = $request->january;
         $data->february = $request->february;
         $data->march = $request->march;
@@ -100,7 +100,7 @@ class FeeStructureController extends Controller
         $data->november = $request->november;
         $data->december = $request->december;
         $data->update();
-        return redirect()->route('FeeStructure.index')->with('success','successfully update your fee');
+        return redirect()->route('FeeStructure.index')->with('success', 'successfully update your fee');
     }
 
     /**
@@ -111,6 +111,6 @@ class FeeStructureController extends Controller
         $data = feeStructure::find($id);
         $data->delete();
 
-        return redirect()->back()->with('success','successfully delete');
+        return redirect()->back()->with('success', 'successfully delete');
     }
 }

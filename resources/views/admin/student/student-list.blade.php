@@ -26,50 +26,45 @@
                     </ol>
                 </div>
             </div>
-            <!-- <div class="row mb-2">
-                <div class="form-group col-md-4">
-                    <label for="exampleInputClass">Class</label>
-                    <select name="academic_class_id" id="exampleInputClass" class="form-control">
-                        <option disabled selected>Select what class</option>
-                        @foreach ($student->academicClass as $class )
-                        <option value="{{$class->id}}">{{$class->name}}</option>
-                        @endforeach
-                    </select>
 
-                    @error('academic_class_id')
-                    <div>
-                        <p class="text-danger">{{$message }}</p>
+            <div class="mb-2">
+                <form action="{{route('student.index')}}" method="get">
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-3 my-1">
+                            <label class="sr-only" for="exampleInputClass">Class</label>
+                            <select name="academic_class_id" id="exampleInputClass" class="form-control">
+                                <option disabled selected>Select what class</option>
+                                @foreach ($student as $data )
+                                <option value="{{$data->academicClass->id}}" {{$data -> academicClass->id == request('academic_class_id') ? 'selected' : null}}>{{$data->academicClass->name}}</option>
+                                @endforeach
+                            </select>
+
+                            @error('academic_class_id')
+                            <div>
+                                <p class="text-danger">{{$message }}</p>
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-sm-3 my-1">
+                            <label class="sr-only" for="exampleInputAcademicYear">Academic Year</label>
+                            <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
+                                <option value="" disabled selected>Select Academic Year</option>
+                                @foreach ($student as $data )
+                                <option value="{{$data->academicYear->id}}" {{$data -> academicYear->id == request('academic_year_id') ? 'selected' : null}}>{{$data->academicYear->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('academic_year_id')
+                            <div>
+                                <p class="text-danger">{{$message }}</p>
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-auto my-1">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
                     </div>
-                    @enderror
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="exampleInputAcademicYear">Academic Year</label>
-                    <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
-                        <option value="" disabled selected>Select Academic Year</option>
-                        @foreach ($student->AcademicYears as $AcademicYear )
-                        <option value="{{$AcademicYear->id}}">{{$AcademicYear->name}}</option>
-                        @endforeach
-                    </select>
-                    @error('academic_year_id')
-                    <div>
-                        <p class="text-danger">{{$message }}</p>
-                    </div>
-                    @enderror
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="exampleInputAcademicYear">Admission Date</label>
-                    <input type="date" name="admission_date" class="form-control">
-                    @error('admission_date')
-                    <div>
-                        <p class="text-danger">{{$message }}</p>
-                    </div>
-                    @enderror
-
-                </div>
-
-            </div> -->
+                </form>
+            </div>
     </section>
 
     <section class="content">

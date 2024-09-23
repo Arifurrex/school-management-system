@@ -40,7 +40,7 @@
                 <select name="academic_class_id" id="exampleInputClass" class="form-control">
                   <option disabled selected>Select what class</option>
                   @foreach ($classes as $class )
-                  <option value="{{$class->id}}"{{$class->id == request('academic_class_id') ? 'selected' : null}}>{{$class->name}}</option>
+                  <option value="{{$class->id}}" {{$class->id == request('academic_class_id') ? 'selected' : null}}>{{$class->name}}</option>
                   @endforeach
                 </select>
               </div>
