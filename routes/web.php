@@ -3,16 +3,34 @@
 use App\Http\Controllers\AcademicClassController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\adminStudentController;
 use App\Http\Controllers\FeeHeadController;
 use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\studentController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// route for student user
+Route::group(['prefix' => 'adminStudent'], function () {
+    //guest .. Laravel এর guest middleware এই উদ্দেশ্যে তৈরি করা হয়েছে যে, যারা ইতিমধ্যে লগইন করেছে তারা যেন লগইন পেজ বা রেজিস্ট্রেশন পেজে যেতে না পারে। অর্থাৎ, লগইন করা ইউজার যদি লগইন পেজে যেতে চায়, তাকে সরাসরি ড্যাশবোর্ডে রিডাইরেক্ট করা উচিত।
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('login', [adminStudentController::class, 'index'])->name('adminStudent.login');
+        Route::post('authenticate', [adminStudentController::class, 'authenticate'])->name('adminStudent.authenticate');
+    });
+    //auth
+    Route::group(['middleware' => 'auth'], function () {
 
+        Route::get('dashboard', [adminStudentController::class, 'dashboard'])->name('adminStudent.dashboard');
+        Route::get('logout', [adminStudentController::class, 'logout'])->name('adminStudent.logout');
+    });
+});
+
+
+// route for admin user
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'admin.guest'], function () {
         Route::get('login', [AdminController::class, 'index'])->name('admin.login');
@@ -64,7 +82,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('student/store', [studentController::class, 'store'])->name('student.store');
         Route::get('student/edit/{id}', [studentController::class, 'edit'])->name('student.edit');
         Route::post('student/update/{id}', [studentController::class, 'update'])->name('student.update');
-        Route::get('student/delete/{id}', [studentController::class, 'delete'])->name('student.delete');    
-
+        Route::get('student/delete/{id}', [studentController::class, 'delete'])->name('student.delete');
     });
 });

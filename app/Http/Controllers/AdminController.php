@@ -20,23 +20,20 @@ class AdminController extends Controller
         $req->validate([
             'email' => 'required',
             'password' => 'required',
-        ]); 
-        
-         
-        if (Auth::guard('admin')->attempt(['email' => $req->email,'password' => $req->password])) 
-        {
+        ]);
 
-           if(Auth::guard('admin')->user()->role != 'admin')
-           {
+
+        if (Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password])) {
+
+            if (Auth::guard('admin')->user()->role != 'admin') {
                 Auth::guard('admin')->logout();
-                return redirect()->route('admin.login')->with('error','Unauthorise user ');
-           }else{
+                return redirect()->route('admin.login')->with('error', 'Unauthorise user ');
+            } else {
                 return redirect()->route('admin.dashboard');
-           }
+            }
         } else {
 
             return redirect()->route('admin.login')->with('error', 'something went wrong');
-
         };
     }
 
@@ -56,13 +53,13 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
-    
+
     public function logout()
     {
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login')->with('success', 'successfully log out');
     }
-    
+
 
     public function form()
     {
