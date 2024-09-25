@@ -215,6 +215,15 @@
 
                         </li>
                         <li class="nav-item menu-open">
+                            <a href="{{route('adminStudent.passwordReset')}}" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Password Reset
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item menu-open">
                             <a href="{{route('adminStudent.logout')}}" class="nav-link ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
