@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>FeeHead DataTables</h1>
+                    <h1>Announcement list</h1>
                     @if (Session::has('success'))
                     <p class="alert alert-success">
                         {{Session::get('success')}}
@@ -22,7 +22,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">FeeHead DataTables</li>
+                        <li class="breadcrumb-item active"><a href="{{route('announcement.index')}}">Announcement List</a></li>
                     </ol>
                 </div>
             </div>
@@ -45,28 +45,31 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Fee Head</th>
-                                        <th>Create at</th>
+                                        <th>message</th>
+                                        <th>type</th>
+                                        <th>create-at</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($FeeHead as $data )
+                                    @foreach ($announcement as $data )
                                     <tr>
                                         <td>{{$data->id}}</td>
-                                        <td>{{$data->name}}</td>
-                                        <td>{{$data->created_at}}</td>
-                                        <td><a href="{{route('FeeHead.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
-                                        <td><a href="{{route('FeeHead.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                                        <td>{{$data->message}}</td>
+                                        <td>{{$data->type}}</td>
+                                        <td>{{\Carbon\Carbon::parse($data->created_at)->diffForHumans()}}</td>
+                                        <td><a href="{{route('announcement.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
+                                        <td><a href="{{route('announcement.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Fee Head</th>
-                                        <th>Create at</th>
+                                    <th>ID</th>
+                                        <th>message</th>
+                                        <th>type</th>
+                                        <th>create-at</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
