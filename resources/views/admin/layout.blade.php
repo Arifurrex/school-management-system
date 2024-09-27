@@ -371,6 +371,32 @@
                             </ul>
                         </li>
 
+                        <!-- subject management -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Subject
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('subject.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>view Subject</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('subject.create')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Subject create</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">

@@ -8,6 +8,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\FeeHeadController;
 use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\studentController;
+use App\Http\Controllers\SubjectController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -99,5 +100,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('announcement/edit/{id}', [AnnouncementController::class, 'edit'])->name('announcement.edit');
         Route::post('announcement/update/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
         Route::get('announcement/delete/{id}', [AnnouncementController::class, 'delete'])->name('announcement.delete');
+
+
+        //subject management
+        Route::get('subject/index', [SubjectController::class, 'index'])->name('subject.index');
+        Route::get('subject/create', [SubjectController::class, 'create'])->name('subject.create');
+        Route::post('subject/store', [SubjectController::class, 'store'])->name('subject.store');
+        Route::get('subject/edit/{id}', [SubjectController::class, 'edit'])->name('subject.edit');
+        Route::post('subject/update/{id}', [SubjectController::class, 'update'])->name('subject.update');
+        Route::get('subject/delete/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
     });
 });
