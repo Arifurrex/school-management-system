@@ -9,9 +9,10 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">Dashboard</h1>
                     @if (\Carbon\Carbon::parse(Auth::user()->dob)->isBirthday())
-                        happy birthday {{Auth::user()->name}}
+                    happy birthday {{Auth::user()->name}}
                     @endif
                 </div>
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,18 @@ class adminStudentController extends Controller
 
     public function dashboard()
     {
-        return view('adminStudent.dashboard');
+        $data['announcement'] = Announcement::where('type', 'student')->latest()->get();
+
+        // ছাত্রদের জন্য ডাটা গণনা
+        $data['studentCount'] = \App\Models\Announcement::where('type', 'student')->count();
+
+        // শিক্ষকদের জন্য ডাটা গণনা
+        $teacherCount = \App\Models\Announcement::where('type', 'teacher')->count();
+
+        // মোট ডাটা গণনা
+        $totalCount = \App\Models\Announcement::count();
+
+        return view('adminStudent.dashboard', $data);
     }
 
     public function logout()
@@ -44,32 +56,31 @@ class adminStudentController extends Controller
         return redirect()->route('adminStudent.login')->with('success', 'successfully logout ');
     }
 
-    public function passwordReset(){
+    public function passwordReset()
+    {
         return view('adminStudent.passwordReset');
     }
 
 
-    public function passwordResetStore(Request $request){
+    public function passwordResetStore(Request $request)
+    {
         $request->validate([
             'newPass' => 'required',
             'confirmPass' => 'required|same:newPass',
         ]);
 
-        $oldPass=$request->oldPass;
-        $newPass=$request->newPass;
-        $confirmPass=$request->confirmPass;
+        $oldPass = $request->oldPass;
+        $newPass = $request->newPass;
+        $confirmPass = $request->confirmPass;
 
-        if(Hash::check($oldPass,Auth::user()->password)){
+        if (Hash::check($oldPass, Auth::user()->password)) {
             Auth::user()->password = $confirmPass;
             Auth::user()->update();
             Auth::logout();
 
-            return redirect()->route('adminStudent.login')->with('success','successfully update your password');
-        }else{
-            return redirect()->back()->with('error','Your old password wrong');
+            return redirect()->route('adminStudent.login')->with('success', 'successfully update your password');
+        } else {
+            return redirect()->back()->with('error', 'Your old password wrong');
         }
-
-
-
     }
 }
