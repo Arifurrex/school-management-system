@@ -42,10 +42,16 @@ class adminStudentController extends Controller
         $data['studentCount'] = \App\Models\Announcement::where('type', 'student')->count();
 
         // শিক্ষকদের জন্য ডাটা গণনা
-        $teacherCount = \App\Models\Announcement::where('type', 'teacher')->count();
+        $data['teacherCount'] = \App\Models\Announcement::where('type', 'teacher')->count();
 
         // মোট ডাটা গণনা
-        $totalCount = \App\Models\Announcement::count();
+        $data['totalCount'] = \App\Models\Announcement::count();
+
+        // সকল আনরিড মেসেজ পাবেন
+        $data['unreadAnnouncements'] = Announcement::where('status', 1)->get();
+
+        // সকল রিড মেসেজ পাবেন
+        $data['readAnnouncements'] = Announcement::where('status', 0)->get();
 
         return view('adminStudent.dashboard', $data);
     }

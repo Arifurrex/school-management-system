@@ -28,6 +28,8 @@
 
     <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     @yield('customcss')
 </head>
 
@@ -83,7 +85,7 @@
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
                         @foreach ($announcement as $item )
-                        <a href="#" class="dropdown-item">
+                        <a class="dropdown-item {{ $item->status == 1 ? 'font-weight-bold' : '' }}" onclick="markAsRead({{ $item->id }})">
                             <div class="media">
                                 <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
@@ -389,6 +391,23 @@
 
     <script src="dist/js/pages/dashboard.js"></script>
 
+    <!-- Your Custom JavaScript Function -->
+    <script>
+        function markAsRead(id) {
+            console.log(id);
+            axios.post('/adminStudent/mark-as-read', {
+                    id: id
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        location.reload(); // সফল হলে পেজ রিলোড হবে
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    </script>
     @yield('customJs')
 </body>
 

@@ -12,9 +12,9 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $data=new Announcement();
-        $all_data['announcement']=$data->latest()->get();
-        return view('admin.announcement.announcement-index',$all_data);
+        $data = new Announcement();
+        $all_data['announcement'] = $data->latest()->get();
+        return view('admin.announcement.announcement-index', $all_data);
     }
 
     /**
@@ -31,15 +31,12 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'message'=>'required',
-            'type'=>'required',
+            'message' => 'required',
+            'type' => 'required',
         ]);
 
         Announcement::create($request->all());
-        return redirect()->back()->with('success','successfully added announcement');
-
-
-
+        return redirect()->back()->with('success', 'successfully added announcement');
     }
 
     /**
@@ -53,23 +50,23 @@ class AnnouncementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Announcement $announcement,$id)
+    public function edit(Announcement $announcement, $id)
     {
         $data['announcement'] =  Announcement::find($id);
-        return view('admin.announcement.announcement-edit',$data);
+        return view('admin.announcement.announcement-edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Announcement $announcement,Request $request , $id)
+    public function update(Announcement $announcement, Request $request, $id)
     {
         $data =  Announcement::find($id);
-        $data->message =$request->message;
+        $data->message = $request->message;
         $data->type = $request->type;
         $data->update();
 
-        return redirect()->route('announcement.index')->with('success','announcement update successfully');
+        return redirect()->route('announcement.index')->with('success', 'announcement update successfully');
         dd($data);
     }
 
@@ -77,11 +74,20 @@ class AnnouncementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Announcement $announcement,$id)
+    public function delete(Announcement $announcement, $id)
     {
         $data =  Announcement::find($id);
         $data->delete();
 
-        return redirect()->back()->with('success','successfully delete');
+        return redirect()->back()->with('success', 'successfully delete');
+    }
+
+    public function markAsRead(Request $request)
+    {
+        $announcement = Announcement::find($request->id);
+        $announcement->status = 0;
+        $announcement->save();
+
+        return response()->json(['success' => true]);
     }
 }

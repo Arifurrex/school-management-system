@@ -12,5 +12,6 @@ class Announcement extends Model
     protected $fillable=[
         'message',
         'type',
+        'status',
     ];
 }

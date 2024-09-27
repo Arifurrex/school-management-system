@@ -29,6 +29,10 @@ Route::group(['prefix' => 'adminStudent'], function () {
         Route::get('logout', [adminStudentController::class, 'logout'])->name('adminStudent.logout');
         Route::get('password-reset', [adminStudentController::class, 'passwordReset'])->name('adminStudent.passwordReset');
         Route::post('password-reset/store', [adminStudentController::class, 'passwordResetStore'])->name('adminStudent.passwordReset.store');
+
+        // announcemnet read and undread
+        // read and unread
+        Route::post('mark-as-read', [AnnouncementController::class, 'markAsRead']);
     });
 });
 
