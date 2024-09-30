@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Fee Structure DataTables</h1>
+                    <h1>Assaign Subject To Class DataTables</h1>
                     @if (Session::has('success'))
                     <p class="alert alert-success">
                         {{Session::get('success')}}
@@ -22,7 +22,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{route('FeeStructure.index')}}">Fee Structure DataTables</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('assignSubjectToClass.index')}}">Assaign Subject To Class DataTables</a></li>
                     </ol>
                 </div>
             </div>
@@ -32,25 +32,25 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{route('FeeStructure.index')}}" method="get">
+                    <form action="{{route('assignSubjectToClass.index')}}" method="get">
                         @csrf
                         <div class="row d-flex justify-content-center align-items-center border">
                             <div class="form-group col-md-3">
                                 <label for="exampleInputClass">Class</label>
-                                <select name="academic_class_id" id="exampleInputClass" class="form-control">
+                                <select name="class_id" id="exampleInputClass" class="form-control">
                                     <option disabled selected>Select what class</option>
                                     @foreach ($classes as $class )
-                                    <option value="{{$class->id}}" {{$class->id == request('academic_class_id') ? 'selected' : null}}>{{$class->name}}</option>
+                                    <option value="{{$class->id}}" {{$class->id == request('class_id') ? 'selected' : null}}>{{$class->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="exampleInputAcademicYear">Academic Year</label>
-                                <select name="academic_year_id" id="exampleInputAcademicYear" class="form-control">
-                                    <option value="" disabled selected>Select Academic Year</option>
-                                    @foreach ($AcademicYears as $AcademicYear )
-                                    <option value="{{$AcademicYear->id}}" {{$AcademicYear->id == request('academic_year_id') ? 'selected' : ''}}>{{$AcademicYear->name}}</option>
+                                <label for="exampleInputsubject">subject</label>
+                                <select name="subject_id" id="exampleInputsubject" class="form-control">
+                                    <option value="" disabled selected>Select subject</option>
+                                    @foreach ($subjects as $subject )
+                                    <option value="{{$subject->id}}" {{$subject->id == request('subject_id') ? 'selected' : ''}}>{{$subject->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -82,47 +82,21 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Class</th>
-                                        <th>Fee Head</th>
-                                        <th>Academic Year</th>
-                                        <th>January</th>
-                                        <th>February</th>
-                                        <th>March</th>
-                                        <th>April</th>
-                                        <th>May</th>
-                                        <th>June</th>
-                                        <th>July</th>
-                                        <th>August</th>
-                                        <th>September</th>
-                                        <th>October</th>
-                                        <th>November</th>
-                                        <th>December</th>
+                                        <th>Subject</th>
                                         <th>create time</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($feeStructure as $data )
+                                    @foreach ($assignSubjectToClasses as $data )
                                     <tr>
                                         <td>{{$data->id}}</td>
-                                        <td>{{ $data->academicClass->name}}</td>
-                                        <td>{{$data->FeeHead->name}}</td>
-                                        <td>{{$data->AcademicYear->name}}</td>
-                                        <td>{{$data->january}}</td>
-                                        <td>{{$data->february}}</td>
-                                        <td>{{$data->march}}</td>
-                                        <td>{{$data->april}}</td>
-                                        <td>{{$data->may}}</td>
-                                        <td>{{$data->june}}</td>
-                                        <td>{{$data->july}}</td>
-                                        <td>{{$data->august}}</td>
-                                        <td>{{$data->september}}</td>
-                                        <td>{{$data->october}}</td>
-                                        <td>{{$data->november}}</td>
-                                        <td>{{$data->december}}</td>
-                                        <td>{{$data->created_at}}</td>
-                                        <td><a href="{{route('FeeStructure.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
-                                        <td><a href="{{route('FeeStructure.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                                        <td>{{$data->academicClasses->name}}</td>
+                                        <td>{{$data->subjects->name}}</td>
+                                        <td>{{\Carbon\Carbon::parse($data->created_at)->diffForHumans();}}</td>
+                                        <td><a href="{{route('assignSubjectToClass.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
+                                        <td><a href="{{route('assignSubjectToClass.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -130,20 +104,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Class</th>
-                                        <th>Academic Year</th>
-                                        <th>Fee Head</th>
-                                        <th>January</th>
-                                        <th>February</th>
-                                        <th>March</th>
-                                        <th>April</th>
-                                        <th>May</th>
-                                        <th>June</th>
-                                        <th>July</th>
-                                        <th>August</th>
-                                        <th>September</th>
-                                        <th>October</th>
-                                        <th>November</th>
-                                        <th>December</th>
+                                        <th>Subject</th>
+                                        <th>create time</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>

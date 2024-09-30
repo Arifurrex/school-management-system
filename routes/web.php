@@ -5,6 +5,7 @@ use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\adminStudentController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AssignSubjectToClassController;
 use App\Http\Controllers\FeeHeadController;
 use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\studentController;
@@ -109,5 +110,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('subject/edit/{id}', [SubjectController::class, 'edit'])->name('subject.edit');
         Route::post('subject/update/{id}', [SubjectController::class, 'update'])->name('subject.update');
         Route::get('subject/delete/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
+
+
+        //assign subject to class
+        Route::get('assignSubjectToClass/index', [AssignSubjectToClassController::class, 'index'])->name('assignSubjectToClass.index');
+        Route::get('assignSubjectToClass/create', [AssignSubjectToClassController::class, 'create'])->name('assignSubjectToClass.create');
+        Route::post('assignSubjectToClass/store', [AssignSubjectToClassController::class, 'store'])->name('assignSubjectToClass.store');
+        Route::get('assignSubjectToClass/edit/{id}', [AssignSubjectToClassController::class, 'edit'])->name('assignSubjectToClass.edit');
+        Route::post('assignSubjectToClass/update/{id}', [AssignSubjectToClassController::class, 'update'])->name('assignSubjectToClass.update');
+        Route::get('assignSubjectToClass/delete/{id}', [AssignSubjectToClassController::class, 'delete'])->name('assignSubjectToClass.delete');
     });
 });
