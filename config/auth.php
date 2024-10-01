@@ -32,8 +32,8 @@ return [
     | system used by the application. Typically, Eloquent is utilized.
     |
     | Supported: "session"
-    |এরপর, আপনি আপনার অ্যাপ্লিকেশনের জন্য প্রতিটি authentication গার্ড সংজ্ঞায়িত করতে        পারেন। | অবশ্যই, আপনার জন্য একটি চমৎকার ডিফল্ট কনফিগারেশন নির্ধারিত হয়েছে, | যা সেশন স্টোরেজ এবং Eloquent ইউজার প্রোভাইডার ব্যবহার করে। | 
-    
+    |এরপর, আপনি আপনার অ্যাপ্লিকেশনের জন্য প্রতিটি authentication গার্ড সংজ্ঞায়িত করতে        পারেন। | অবশ্যই, আপনার জন্য একটি চমৎকার ডিফল্ট কনফিগারেশন নির্ধারিত হয়েছে, | যা সেশন স্টোরেজ এবং Eloquent ইউজার প্রোভাইডার ব্যবহার করে। |
+
     | প্রতিটি authentication গার্ডের একটি ইউজার প্রোভাইডার থাকে, | যা নির্ধারণ করে ইউজাররা কীভাবে আপনার ডাটাবেস বা অন্য কোনো স্টোরেজ সিস্টেম থেকে | প্রকৃতপক্ষে রিট্রিভ করা হবে, যা অ্যাপ্লিকেশন দ্বারা ব্যবহৃত হয়। সাধারণত, Eloquent ব্যবহৃত হয়। | | সমর্থিত: "session"
     |
     */
@@ -46,6 +46,10 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+        ],
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
         ],
     ],
 
@@ -84,6 +88,10 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
         'admins' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'teachers' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
@@ -144,7 +152,7 @@ return [
     | window expires and users are asked to re-enter their password via the
     | confirmation screen. By default, the timeout lasts for three hours.
     |
-        
+
     | পাসওয়ার্ড নিশ্চিতকরণ সময়সীমা
     |--------------------------------------------------------------------------
     |

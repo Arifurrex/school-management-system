@@ -13,10 +13,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'admin.guest' => \App\Http\Middleware\AdminRedirect::class,
-            'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class,
-        ]);
+        $middleware->alias(
+            [
+                'admin.guest' => \App\Http\Middleware\AdminRedirect::class,
+                'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class,
+            ]
+        );
+
+        $middleware->alias(
+            [
+                'teacher.guest' => \App\Http\Middleware\teacherRedirect::class,
+                'teacher.auth' => \App\Http\Middleware\teacherAuthenticate::class,
+            ]
+        );
 
 
         $middleware->redirectTo(

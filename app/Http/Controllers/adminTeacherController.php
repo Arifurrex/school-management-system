@@ -8,12 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class adminStudentController extends Controller
+class adminTeacherController extends Controller
 {
     public function index()
     {
-        return view('adminStudent.login');
+        return view('adminTeacher.login');
     }
+
 
     public function authenticate(Request $request)
     {
@@ -22,21 +23,22 @@ class adminStudentController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (Auth::user()->role != 'student') {
-                Auth::logout();
-                return redirect()->route('adminStudent.login')->with('error', 'Unauthorise user ');
+
+        if (Auth::guard('teacher')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            if (Auth::guard('teacher')->user()->role != 'teacher') {
+                return redirect()->route('adminTeacher.logout')->with('error', 'Unauthorize user');
             } else {
-                return redirect()->route('adminStudent.dashboard');
+                return redirect()->route('adminTeacher.dashboard');
             }
         } else {
-            return redirect()->route('adminStudent.login')->with('error', 'something went wrong');
-        };
+            return redirect()->route('adminTeacher.login')->with('error', 'something went wrong');
+        }
     }
+
 
     public function dashboard()
     {
-        $data['announcement'] = Announcement::where('type', 'student')->latest()->get();
+        $data['announcement'] = Announcement::where('type', 'teacher')->latest()->get();
 
         // ছাত্রদের জন্য ডাটা গণনা
         $data['studentCount'] = \App\Models\Announcement::where('type', 'student')->count();
@@ -53,13 +55,13 @@ class adminStudentController extends Controller
         // সকল রিড মেসেজ পাবেন
         $data['readAnnouncements'] = Announcement::where('status', 0)->get();
 
-        return view('adminStudent.dashboard', $data);
+        return view('adminTeacher.dashboard', $data);
     }
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('adminStudent.login')->with('success', 'successfully logout ');
+        Auth::guard('teacher')->logout();
+        return redirect()->route('adminTeacher.login')->with('success', 'successfully logout');
     }
 
     public function passwordReset()
@@ -81,13 +83,14 @@ class adminStudentController extends Controller
         // সকল রিড মেসেজ পাবেন
         $data['readAnnouncements'] = Announcement::where('status', 0)->get();
 
-        return view('adminStudent.passwordReset',$data);
+        return view('adminTeacher.passwordReset', $data);
     }
-
 
     public function passwordResetStore(Request $request)
     {
+
         $request->validate([
+            'oldPass' => 'required',
             'newPass' => 'required',
             'confirmPass' => 'required|same:newPass',
         ]);
@@ -96,14 +99,14 @@ class adminStudentController extends Controller
         $newPass = $request->newPass;
         $confirmPass = $request->confirmPass;
 
-        if (Hash::check($oldPass, Auth::user()->password)) {
-            Auth::user()->password = $confirmPass;
-            Auth::user()->update();
-            Auth::logout();
+        if (Hash::check($oldPass, Auth::guard('teacher')->user()->password)) {
+            Auth::guard('teacher')->user()->password = $confirmPass;
+            Auth::guard('teacher')->user()->update();
+            Auth::guard('teacher')->logout();
 
-            return redirect()->route('adminStudent.login')->with('success', 'successfully update your password');
+            return redirect()->route('adminTeacher.login')->with('success', 'successfully update your password');
         } else {
-            return redirect()->back()->with('error', 'Your old password wrong');
+            return redirect()->back()->with('error', 'incorrect old password');
         }
     }
 }

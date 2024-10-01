@@ -4,12 +4,14 @@ use App\Http\Controllers\AcademicClassController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\adminStudentController;
+use App\Http\Controllers\adminTeacherController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AssignSubjectToClassController;
 use App\Http\Controllers\FeeHeadController;
 use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\studentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\teacherController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -17,29 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// route for student user
-Route::group(['prefix' => 'adminStudent'], function () {
-    //guest .. Laravel এর guest middleware এই উদ্দেশ্যে তৈরি করা হয়েছে যে, যারা ইতিমধ্যে লগইন করেছে তারা যেন লগইন পেজ বা রেজিস্ট্রেশন পেজে যেতে না পারে। অর্থাৎ, লগইন করা ইউজার যদি লগইন পেজে যেতে চায়, তাকে সরাসরি ড্যাশবোর্ডে রিডাইরেক্ট করা উচিত।
-    Route::group(['middleware' => 'guest'], function () {
-        Route::get('login', [adminStudentController::class, 'index'])->name('adminStudent.login');
-        Route::post('authenticate', [adminStudentController::class, 'authenticate'])->name('adminStudent.authenticate');
-    });
-    //auth
-    Route::group(['middleware' => 'auth'], function () {
-
-        Route::get('dashboard', [adminStudentController::class, 'dashboard'])->name('adminStudent.dashboard');
-        Route::get('logout', [adminStudentController::class, 'logout'])->name('adminStudent.logout');
-        Route::get('password-reset', [adminStudentController::class, 'passwordReset'])->name('adminStudent.passwordReset');
-        Route::post('password-reset/store', [adminStudentController::class, 'passwordResetStore'])->name('adminStudent.passwordReset.store');
-
-        // announcemnet read and undread
-        // read and unread
-        Route::post('mark-as-read', [AnnouncementController::class, 'markAsRead']);
-    });
-});
 
 
 // route for admin user
+
+
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'admin.guest'], function () {
         Route::get('login', [AdminController::class, 'index'])->name('admin.login');
@@ -85,6 +69,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('FeeStructure/delete/{id}', [FeeStructureController::class, 'delete'])->name('FeeStructure.delete');
 
 
+        //teacher-route
+        Route::get('teacher/index', [teacherController::class, 'index'])->name('teacher.index');
+        Route::get('teacher/create', [teacherController::class, 'create'])->name('teacher.create');
+        Route::post('teacher/store', [teacherController::class, 'store'])->name('teacher.store');
+        Route::get('teacher/edit/{id}', [teacherController::class, 'edit'])->name('teacher.edit');
+        Route::post('teacher/update/{id}', [teacherController::class, 'update'])->name('teacher.update');
+        Route::get('teacher/delete/{id}', [teacherController::class, 'delete'])->name('teacher.delete');
+
         //student-route
         Route::get('student/index', [studentController::class, 'index'])->name('student.index');
         Route::get('student/create', [studentController::class, 'create'])->name('student.create');
@@ -119,5 +111,59 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('assignSubjectToClass/edit/{id}', [AssignSubjectToClassController::class, 'edit'])->name('assignSubjectToClass.edit');
         Route::post('assignSubjectToClass/update/{id}', [AssignSubjectToClassController::class, 'update'])->name('assignSubjectToClass.update');
         Route::get('assignSubjectToClass/delete/{id}', [AssignSubjectToClassController::class, 'delete'])->name('assignSubjectToClass.delete');
+    });
+});
+
+
+
+//route for teacher user
+
+
+route::group(['prefix' => 'adminTeacher'], function () {
+
+    Route::group(['middleware' => 'teacher.guest'], function () {
+        Route::get('login', [adminTeacherController::class, 'index'])->name('adminTeacher.login');
+        Route::post('authenticate',[adminTeacherController::class, 'authenticate'])->name('adminTeacher.authenticate');
+    });
+
+    Route::group(['middleware' => 'teacher.auth'], function () {
+
+        Route::get('dashboard',[adminTeacherController::class, 'dashboard'])->name('adminTeacher.dashboard');
+        Route::get('logout',[adminTeacherController::class, 'logout'])->name('adminTeacher.logout');
+        Route::get('password-reset', [adminTeacherController::class, 'passwordReset'])->name('adminTeacher.passwordReset');
+        Route::post('password-reset/store', [adminTeacherController::class, 'passwordResetStore'])->name('adminTeacher.passwordReset.store');
+
+         // announcemnet read and undread
+        // read and unread
+        Route::post('mark-as-read', [AnnouncementController::class, 'markAsRead']);
+    });
+});
+
+
+
+
+
+
+
+// route for student user
+
+
+Route::group(['prefix' => 'adminStudent'], function () {
+    //guest .. Laravel এর guest middleware এই উদ্দেশ্যে তৈরি করা হয়েছে যে, যারা ইতিমধ্যে লগইন করেছে তারা যেন লগইন পেজ বা রেজিস্ট্রেশন পেজে যেতে না পারে। অর্থাৎ, লগইন করা ইউজার যদি লগইন পেজে যেতে চায়, তাকে সরাসরি ড্যাশবোর্ডে রিডাইরেক্ট করা উচিত।
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('login', [adminStudentController::class, 'index'])->name('adminStudent.login');
+        Route::post('authenticate', [adminStudentController::class, 'authenticate'])->name('adminStudent.authenticate');
+    });
+    //auth
+    Route::group(['middleware' => 'auth'], function () {
+
+        Route::get('dashboard', [adminStudentController::class, 'dashboard'])->name('adminStudent.dashboard');
+        Route::get('logout', [adminStudentController::class, 'logout'])->name('adminStudent.logout');
+        Route::get('password-reset', [adminStudentController::class, 'passwordReset'])->name('adminStudent.passwordReset');
+        Route::post('password-reset/store', [adminStudentController::class, 'passwordResetStore'])->name('adminStudent.passwordReset.store');
+
+        // announcemnet read and undread
+        // read and unread
+        Route::post('mark-as-read', [AnnouncementController::class, 'markAsRead']);
     });
 });
