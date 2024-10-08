@@ -137,19 +137,22 @@ route::group(['prefix' => 'adminTeacher'], function () {
 
     Route::group(['middleware' => 'teacher.guest'], function () {
         Route::get('login', [adminTeacherController::class, 'index'])->name('adminTeacher.login');
-        Route::post('authenticate',[adminTeacherController::class, 'authenticate'])->name('adminTeacher.authenticate');
+        Route::post('authenticate', [adminTeacherController::class, 'authenticate'])->name('adminTeacher.authenticate');
     });
 
     Route::group(['middleware' => 'teacher.auth'], function () {
 
-        Route::get('dashboard',[adminTeacherController::class, 'dashboard'])->name('adminTeacher.dashboard');
-        Route::get('logout',[adminTeacherController::class, 'logout'])->name('adminTeacher.logout');
+        Route::get('dashboard', [adminTeacherController::class, 'dashboard'])->name('adminTeacher.dashboard');
+        Route::get('logout', [adminTeacherController::class, 'logout'])->name('adminTeacher.logout');
         Route::get('password-reset', [adminTeacherController::class, 'passwordReset'])->name('adminTeacher.passwordReset');
         Route::post('password-reset/store', [adminTeacherController::class, 'passwordResetStore'])->name('adminTeacher.passwordReset.store');
 
-         // announcemnet read and undread
+        // announcemnet read and undread
         // read and unread
         Route::post('mark-as-read', [AnnouncementController::class, 'markAsRead']);
+
+        // teacher own class and subject
+        Route::get('teacherOwnClassAndSubject', [adminTeacherController::class, 'teacherOwnClassAndSubject'])->name('teacherOwnClassAndSubject');
     });
 });
 
@@ -179,5 +182,8 @@ Route::group(['prefix' => 'adminStudent'], function () {
         // announcemnet read and undread
         // read and unread
         Route::post('mark-as-read', [AnnouncementController::class, 'markAsRead']);
+
+        // teacher own class and subject
+        Route::get('studentOwnClassAndSubject', [adminStudentController::class, 'studentOwnClassAndSubject'])->name('studentOwnClassAndSubject');
     });
 });

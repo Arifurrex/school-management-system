@@ -179,14 +179,25 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <li class="nav-item menu-open">
-                            <a href="{{route('adminTeacher.dashboard')}}" class="nav-link active">
+                            <a href="{{route('adminTeacher.dashboard')}}" class="nav-link {{ request()->routeIs('adminTeacher.dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
+                        </li>
+
+                        <!-- Your Class And Subject  -->
+                        <li class="nav-item menu-open">
+                            <a href="{{route('teacherOwnClassAndSubject')}}" class="nav-link{{ request()->routeIs('teacherOwnClassAndSubject') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Your Class And Subject
+                                </p>
+                            </a>
 
                         </li>
+
                         <li class="nav-item menu-open">
                             <a href="{{route('adminTeacher.passwordReset')}}" class="nav-link ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>

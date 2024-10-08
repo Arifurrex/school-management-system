@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\assignTeacherToClass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,5 +109,32 @@ class adminTeacherController extends Controller
         } else {
             return redirect()->back()->with('error', 'incorrect old password');
         }
+    }
+
+
+    // teacher own subject and class
+    public function teacherOwnClassAndSubject()
+    {
+        $teacherId = Auth::guard('teacher')->user()->id;
+        $data['information'] = assignTeacherToClass::where('teacher_id', $teacherId)->with(['academicClasses', 'subjects'])->get();
+
+        $data['announcement'] = Announcement::where('type', 'teacher')->latest()->get();
+
+        // ছাত্রদের জন্য ডাটা গণনা
+        $data['studentCount'] = \App\Models\Announcement::where('type', 'student')->count();
+
+        // শিক্ষকদের জন্য ডাটা গণনা
+        $data['teacherCount'] = \App\Models\Announcement::where('type', 'teacher')->count();
+
+        // মোট ডাটা গণনা
+        $data['totalCount'] = \App\Models\Announcement::count();
+
+        // সকল আনরিড মেসেজ পাবেন
+        $data['unreadAnnouncements'] = Announcement::where('status', 1)->get();
+
+        // সকল রিড মেসেজ পাবেন
+        $data['readAnnouncements'] = Announcement::where('status', 0)->get();
+
+        return view('adminTeacher.teacherOwnClassAndSubject', $data);
     }
 }

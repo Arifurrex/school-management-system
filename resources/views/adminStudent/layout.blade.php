@@ -185,8 +185,18 @@
                                     Dashboard
                                 </p>
                             </a>
-
                         </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{route('studentOwnClassAndSubject')}}" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                  Your class and subject
+                                </p>
+                            </a>
+                        </li>
+
+
                         <li class="nav-item menu-open">
                             <a href="{{route('adminStudent.passwordReset')}}" class="nav-link ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>

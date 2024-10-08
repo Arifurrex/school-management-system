@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\assignTeacherToClass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +82,7 @@ class adminStudentController extends Controller
         // সকল রিড মেসেজ পাবেন
         $data['readAnnouncements'] = Announcement::where('status', 0)->get();
 
-        return view('adminStudent.passwordReset',$data);
+        return view('adminStudent.passwordReset', $data);
     }
 
 
@@ -105,5 +106,33 @@ class adminStudentController extends Controller
         } else {
             return redirect()->back()->with('error', 'Your old password wrong');
         }
+    }
+
+
+
+    // teacher own subject and class
+    public function  studentOwnClassAndSubject()
+    {
+        $studentClassId = Auth::guard('web')->user()->academic_class_id;
+        $data['information'] = assignTeacherToClass::where('class_id',  $studentClassId)->with(['academicClasses', 'subjects'])->get();
+
+        $data['announcement'] = Announcement::where('type', 'teacher')->latest()->get();
+
+        // ছাত্রদের জন্য ডাটা গণনা
+        $data['studentCount'] = \App\Models\Announcement::where('type', 'student')->count();
+
+        // শিক্ষকদের জন্য ডাটা গণনা
+        $data['teacherCount'] = \App\Models\Announcement::where('type', 'teacher')->count();
+
+        // মোট ডাটা গণনা
+        $data['totalCount'] = \App\Models\Announcement::count();
+
+        // সকল আনরিড মেসেজ পাবেন
+        $data['unreadAnnouncements'] = Announcement::where('status', 1)->get();
+
+        // সকল রিড মেসেজ পাবেন
+        $data['readAnnouncements'] = Announcement::where('status', 0)->get();
+
+        return view('adminStudent.studentOwnClassAndSubject', $data);
     }
 }
