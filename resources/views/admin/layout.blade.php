@@ -204,12 +204,24 @@
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+                        <!-- dashboard -->
                         <li class="nav-item menu-open">
                             <a href="{{route('admin.dashboard')}}" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <!-- logout -->
+                        <li class="nav-item ">
+                            <a href="{{route('admin.logout')}}" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Logout
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -441,6 +453,32 @@
                                     <a href="{{route('assignSubjectToClass.create')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Subject to class create</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <!-- assaign teacher to class -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    assaign Teacher to class
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('assignTeacherToClass.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Teacher to class list</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('assignTeacherToClass.create')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Teacher to class create</p>
                                     </a>
                                 </li>
 

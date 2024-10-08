@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Assaign Subject To Class DataTables</h1>
+                    <h1>Assaign Teacher To Class DataTables</h1>
                     @if (Session::has('success'))
                     <p class="alert alert-success">
                         {{Session::get('success')}}
@@ -22,7 +22,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{route('assignSubjectToClass.index')}}">Assaign Subject To Class DataTables</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('assignTeacherToClass.index')}}">Assaign Teacher To Class DataTables</a></li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{route('assignSubjectToClass.index')}}" method="get">
+                    <form action="{{route('assignTeacherToClass.index')}}" method="get">
                         @csrf
                         <div class="row d-flex justify-content-center align-items-center border">
                             <div class="form-group col-md-3">
@@ -81,6 +81,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Teacher</th>
                                         <th>Class</th>
                                         <th>Subject</th>
                                         <th>create time</th>
@@ -89,20 +90,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($assignSubjectToClasses as $data )
+                                    @foreach ($assignTeacherToClasses as $data )
                                     <tr>
                                         <td>{{$data->id}}</td>
-                                        <td>{{$data->academicClasses->name}}</td>
-                                        <td>{{$data->subjects->name}}</td>
+                                        <td>{{ optional($data->teacher)->name}}</td>
+                                        <td>{{ optional($data->academicClasses)->name}}</td>
+                                        <td>{{ optional($data->subjects)->name}}</td>
                                         <td>{{\Carbon\Carbon::parse($data->created_at)->diffForHumans();}}</td>
-                                        <td><a href="{{route('assignSubjectToClass.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
-                                        <td><a href="{{route('assignSubjectToClass.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
+                                        <td><a href="{{route('assignTeacherToClass.edit',$data->id)}}" class="btn btn-primary">Edit</a></td>
+                                        <td><a href="{{route('assignTeacherToClass.delete',$data->id)}}" onclick="return confirm('are you sure for delete it !')" class="btn btn-danger">Delete</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Teacher</th>
                                         <th>Class</th>
                                         <th>Subject</th>
                                         <th>create time</th>
@@ -174,5 +177,3 @@
 </script>
 
 @endsection
-
-

@@ -13,4 +13,8 @@ class subject extends Model
         'name',
         'type',
     ];
+
+    public function teachers(){
+        return $this->belongsToMany(User::class);
+    }
 }

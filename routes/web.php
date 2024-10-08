@@ -7,6 +7,7 @@ use App\Http\Controllers\adminStudentController;
 use App\Http\Controllers\adminTeacherController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AssignSubjectToClassController;
+use App\Http\Controllers\AssignTeacherToClassController;
 use App\Http\Controllers\FeeHeadController;
 use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\studentController;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 
 
 
-// route for admin user
+//! route for admin user
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -111,12 +112,25 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('assignSubjectToClass/edit/{id}', [AssignSubjectToClassController::class, 'edit'])->name('assignSubjectToClass.edit');
         Route::post('assignSubjectToClass/update/{id}', [AssignSubjectToClassController::class, 'update'])->name('assignSubjectToClass.update');
         Route::get('assignSubjectToClass/delete/{id}', [AssignSubjectToClassController::class, 'delete'])->name('assignSubjectToClass.delete');
+
+
+        // assign teacher to class
+        Route::get('assignTeacherToClass/index', [AssignTeacherToClassController::class, 'index'])->name('assignTeacherToClass.index');
+        Route::get('assignTeacherToClass/create', [AssignTeacherToClassController::class, 'create'])->name('assignTeacherToClass.create');
+        //* ajax route
+        Route::get('assignTeacherToClass/fetchSubjects', [AssignTeacherToClassController::class, 'fetchSubjects'])->name('assignTeacherToClass.fetchSubjects');
+        Route::post('assignTeacherToClass/store', [AssignTeacherToClassController::class, 'store'])->name('assignTeacherToClass.store');
+        Route::get('assignTeacherToClass/edit/{id}', [AssignTeacherToClassController::class, 'edit'])->name('assignTeacherToClass.edit');
+        //* ajax route for edit
+        Route::get('assignTeacherToClass/fetchSubjectsEdit', [AssignTeacherToClassController::class, 'fetchSubjectsEdit'])->name('assignTeacherToClass.fetchSubjectsEdit');
+        Route::post('assignTeacherToClass/update/{id}', [AssignTeacherToClassController::class, 'update'])->name('assignTeacherToClass.update');
+        Route::get('assignTeacherToClass/delete/{id}', [AssignTeacherToClassController::class, 'delete'])->name('assignTeacherToClass.delete');
     });
 });
 
 
 
-//route for teacher user
+//! route for teacher user
 
 
 route::group(['prefix' => 'adminTeacher'], function () {
@@ -145,7 +159,7 @@ route::group(['prefix' => 'adminTeacher'], function () {
 
 
 
-// route for student user
+//! route for student user
 
 
 Route::group(['prefix' => 'adminStudent'], function () {
