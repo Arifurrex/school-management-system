@@ -485,6 +485,32 @@
                             </ul>
                         </li>
 
+                        <!-- time table -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    timeTable
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('timeTable.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>timeTable list</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('timeTable.create')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>timeTable create</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">

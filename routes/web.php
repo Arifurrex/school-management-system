@@ -13,6 +13,7 @@ use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\studentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\teacherController;
+use App\Http\Controllers\TimeTableController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -125,6 +126,21 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('assignTeacherToClass/fetchSubjectsEdit', [AssignTeacherToClassController::class, 'fetchSubjectsEdit'])->name('assignTeacherToClass.fetchSubjectsEdit');
         Route::post('assignTeacherToClass/update/{id}', [AssignTeacherToClassController::class, 'update'])->name('assignTeacherToClass.update');
         Route::get('assignTeacherToClass/delete/{id}', [AssignTeacherToClassController::class, 'delete'])->name('assignTeacherToClass.delete');
+
+        // timetable management
+        Route::get('timeTable/index', [TimeTableController::class, 'index'])->name('timeTable.index');
+        // ajax for index
+        Route::get('timeTable/fetchdata',[TimeTableController::class,'fetchdata']);
+        Route::get('timeTable/create', [TimeTableController::class, 'create'])->name('timeTable.create');
+        //* ajax route
+        Route::get('timeTable/fetchSubjects', [TimeTableController::class, 'fetchSubjects'])->name('timeTable.fetchSubjects');
+        Route::post('timeTable/store', [TimeTableController::class, 'store'])->name('timeTable.store');
+        Route::get('timeTable/edit/{id}', [TimeTableController::class, 'edit'])->name('timeTable.edit');
+        //* ajax route for edit
+        Route::get('timeTable/fetchSubjectsEdit', [TimeTableController::class, 'fetchSubjectsEdit'])->name('timeTable.fetchSubjectsEdit');
+        Route::post('timeTable/update/{id}', [TimeTableController::class, 'update'])->name('timeTable.update');
+        Route::get('timeTable/delete/{id}', [TimeTableController::class, 'delete'])->name('timeTable.delete');
+
     });
 });
 
@@ -155,11 +171,6 @@ route::group(['prefix' => 'adminTeacher'], function () {
         Route::get('teacherOwnClassAndSubject', [adminTeacherController::class, 'teacherOwnClassAndSubject'])->name('teacherOwnClassAndSubject');
     });
 });
-
-
-
-
-
 
 
 //! route for student user
